@@ -50,7 +50,6 @@ export default function SearchBar() {
             setSearchInput(() => "")
         }
     }
-    console.log(searchResults)
 
     return (
         <div className="searchbar-container" ref={containerRef}>
