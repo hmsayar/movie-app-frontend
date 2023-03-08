@@ -14,7 +14,7 @@ export default function FilmPage() {
         let endpoint = query
         const response = await axios({
             method: 'POST',
-            url: "http://localhost:4000/",
+            url: `${import.meta.env.VITE_APP_BACK_URI}`,
             data: { endpoint },
             withCredentials: true,
         })

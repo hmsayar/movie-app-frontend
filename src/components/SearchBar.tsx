@@ -17,7 +17,7 @@ export default function SearchBar() {
         let endpoint = `https://api.themoviedb.org/3/search/movie?query=${searchInput}&language=en-US&page=1`
         const response = await axios({
             method: 'POST',
-            url: "http://localhost:4000/",
+            url: `${import.meta.env.VITE_APP_BACK_URI}`,
             data: { endpoint },
             withCredentials: true,
         })

@@ -14,7 +14,7 @@ export default function MainPage() {
         let endpoint = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`
         const response = await axios({
             method: 'POST',
-            url: "http://localhost:4000/",
+            url: `${import.meta.env.VITE_APP_BACK_URI}`,
             data: { endpoint },
             withCredentials: true,
         })
