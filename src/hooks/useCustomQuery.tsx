@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, UseQueryResult } from '@tanstack/react-query';
 
-interface Props {
+interface queryOpt {
     params:string[];
     request:()=>void;
     debounce:number;
 }
 
-export default function useCustomQuery({params, request, debounce=750}:Props){
+export default function useCustomQuery({params, request, debounce=750}:queryOpt):UseQueryResult<[]>{
     
     const [newParams, setNewParams] = useState(params);
     const stringify = (obj:any) => JSON.stringify(obj);

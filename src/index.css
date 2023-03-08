@@ -158,7 +158,7 @@ h1 {
 .searchbar-container{
   display:flex;
   flex-direction: column;
- position: relative; 
+  position: relative;
   align-items: center;
 
 }
@@ -188,4 +188,28 @@ h1 {
 }
 .search-result-container p{
   color:black;
+}
+
+.search-result{
+  padding:0.75rem;
+  transition: 0.75s;
+  border-radius: 10px;
+}
+
+.search-result:hover{
+  background-color: #979797;
+}
+
+.search-result-flex{
+  display: flex;
+  align-items: center;
+  gap:30px;
+}
+
+.search-img{
+  height: 40px;
+  width: 40px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

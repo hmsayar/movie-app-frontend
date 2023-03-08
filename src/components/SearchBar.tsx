@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import useCustomQuery from "../hooks/useCustomQuery";
 import axios from "axios";
 import { Link } from "react-router-dom"
@@ -11,7 +11,7 @@ const linkStyle = {
 export default function SearchBar() {
 
     const [searchInput, setSearchInput] = useState('');
-    const containerRef = useRef<HTMLDivElement>()
+    const containerRef = useRef() as React.MutableRefObject<HTMLDivElement>
 
     async function makeRequest(): Promise<any> {
         let endpoint = `https://api.themoviedb.org/3/search/movie?query=${searchInput}&language=en-US&page=1`
@@ -21,7 +21,7 @@ export default function SearchBar() {
             data: { endpoint },
             withCredentials: true,
         })
-        return response.data
+        return response.data.results
     }
 
     const { data: searchResults } = useCustomQuery(
@@ -36,8 +36,24 @@ export default function SearchBar() {
         setSearchInput(() => e.target.value)
     }
 
+    useEffect(() => {
+        document.addEventListener('mousedown', handleMouseDown);
+        return () => {
+            document.removeEventListener('mousedown', handleMouseDown);
+            console.log("unmounted")
+
+        };
+    }, []);
+
+    function handleMouseDown(event: any) {
+        if (!containerRef.current.contains(event.target)) {
+            setSearchInput(() => "")
+        }
+    }
+    console.log(searchResults)
+
     return (
-        <div className="searchbar-container">
+        <div className="searchbar-container" ref={containerRef}>
             <div className="searchbar-input-container">
                 <input
                     className="search-input"
@@ -46,21 +62,27 @@ export default function SearchBar() {
                     onChange={(e) => handleChange(e)}
                 />
             </div>
-            {searchResults?.results.length !== 0 && <div className="search-result-container">
-                <ul>
-                    {
-                        searchResults?.results.slice(0, 5).map((item: any) => {
-                            return (
-                                <li key={item.id}>
-                                    <Link to={`/film/${item.id}`} style={linkStyle}>
-                                        {item.title}
-                                    </Link>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            </div>
+            {searchResults?.length !== 0 &&
+                <div className="search-result-container">
+                    <ul>
+                        {
+                            searchResults?.slice(0, 5).map((item: any) => {
+                                return (
+                                    <li key={item.id}>
+                                        <div className="search-result">
+                                            <Link to={`/film/${item.id}`} style={linkStyle}>
+                                                <div className="search-result-flex">
+                                                    <img className="search-img" src={`https://image.tmdb.org/t/p/w185${item.poster_path}`} />
+                                                    <p>{item.title}</p>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </div>
             }
         </div>
     )
