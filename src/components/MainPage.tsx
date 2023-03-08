@@ -2,22 +2,21 @@ import { useState, useEffect } from "react"
 import FilmCard from "./FilmCard"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios"
+import SearchBar from "./SearchBar"
 
 
 
 export default function MainPage() {
     const [blur, setBlur] = useState<number>(0.15)
 
+
     async function makeRequest(page: number) {
-        let source = axios.CancelToken.source()
-        const cancelToken = source.token
         let endpoint = `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`
         const response = await axios({
             method: 'POST',
             url: "http://localhost:4000/",
             data: { endpoint },
             withCredentials: true,
-            cancelToken
         })
         return response
     }
@@ -33,10 +32,6 @@ export default function MainPage() {
             }
         }
     )
-
-
-    
-
 
     useEffect(() => {
         let fetching = false;
@@ -76,6 +71,7 @@ export default function MainPage() {
         <>
 
             <div style={{ "--blurValue": `${blur}px` } as React.CSSProperties} className="parallax" />
+            <SearchBar />
             <div className='films-container'>
                 {movieElements}
             </div>

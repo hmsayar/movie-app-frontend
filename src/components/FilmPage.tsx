@@ -11,15 +11,12 @@ export default function FilmPage() {
     const { filmId } = useParams()
 
     async function makeRequest(query: string): Promise<any> {
-        let source = axios.CancelToken.source()
-        const cancelToken = source.token
         let endpoint = query
         const response = await axios({
             method: 'POST',
             url: "http://localhost:4000/",
             data: { endpoint },
             withCredentials: true,
-            cancelToken
         })
         return response.data
     }
@@ -45,6 +42,8 @@ export default function FilmPage() {
         filmQuery.refetch()
         recommendQuery.refetch()
     },[filmId])
+
+
 
     return (
         <div className="film--page">
