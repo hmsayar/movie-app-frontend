@@ -98,8 +98,15 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  margin:0 10rem 0 10rem;
+  margin:0 auto;
 }
+
+@media only screen and (max-width: 600px){
+  .film-page-overview{
+    flex-direction: column;
+  }
+}
+
 .film-page-overview{
   padding:5rem;
   width: 100%;
@@ -108,7 +115,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap:10rem;
+  gap:5rem;
 }
 .page--img{
   height: 450px;
@@ -122,6 +129,7 @@ h1 {
   justify-content: space-around;
   align-items: center;
   gap:20px;
+
 }
 .page-infos-flex{
   display:flex;
